@@ -20,8 +20,8 @@ namespace Texter.Models
         public static List<Message> GetMessages()
         {
             var client = new RestClient("https://api.twilio.com/2010-04-01");
-            var request = new RestRequest("Accounts/ACb7801c7dfea5c728f5c527cda72cfaee/Messages.json", Method.GET);
-            client.Authenticator = new HttpBasicAuthenticator("ACb7801c7dfea5c728f5c527cda72cfaee", "888e04545f08af3379f9fbc51c019441");
+            var request = new RestRequest("Accounts/"+ EnvironmentVariables.AccountSid +"/Messages.json", Method.GET);
+            client.Authenticator = new HttpBasicAuthenticator(EnvironmentVariables.AccountSid, EnvironmentVariables.AuthToken);
             var response = new RestResponse();
             Task.Run(async () =>
             {
@@ -44,11 +44,11 @@ namespace Texter.Models
         public void Send()
         {
             var client = new RestClient("https://api.twilio.com/2010-04-01");
-            var request = new RestRequest("Accounts/ACb7801c7dfea5c728f5c527cda72cfaee/Messages", Method.POST);
+            var request = new RestRequest("Accounts/" + EnvironmentVariables.AccountSid + "/Messages", Method.POST);
             request.AddParameter("To", To);
             request.AddParameter("From", From);
             request.AddParameter("Body", Body);
-            client.Authenticator = new HttpBasicAuthenticator("ACb7801c7dfea5c728f5c527cda72cfaee", "888e04545f08af3379f9fbc51c019441");
+            client.Authenticator = new HttpBasicAuthenticator(EnvironmentVariables.AccountSid, EnvironmentVariables.AuthToken);
             client.ExecuteAsync(request, response => {
                 Console.WriteLine(response.Content);
             });
