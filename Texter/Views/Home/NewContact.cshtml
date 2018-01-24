@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Contact";
+}
+<!DOCTYPE html>
+
+  <html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>AJAX Demo</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script type="text/javascript">
+  $(document).ready(function() {
+  $('.new-contact').submit(function (event) {
+    event.preventDefault();
+    $.ajax({
+        url: '@Url.Action("NewContact")',
+        type: 'POST',
+        dataType: 'json',
+        data: $(this).serialize(),
+        success: function (result) {
+            var resultMessage = '<p>Name:' + result.name + "</p><p>Phone: " + result.phone + "</p>";
+            $('#result6').append(resultMessage);
+        }
+    });
+});
+            });
+</script>
+</head>
+
+  <body>
+  <h2>Add a Contact</h2>
+
+    <form action="NewContact" class="new-contact">
+        <label for="newName">Name: </label>
+        <input type="text" name="newName" />
+        <label for="phone">Phone: </label>
+        <input type="text" name="newPhone" />
+        <button type="submit">Submit</button>
+    </form>
+
+
+        
+<div id="result6" >
+<h2>Contact List</h2>
+            
+          @foreach(var contact in @ViewBag.Contacts)
+            {
+                <p>Name: @contact.Name</p> <p>Phone: @contact.Phone</p>
+            }
+        </div>
+
+
+
+
+</body>

@@ -9,6 +9,8 @@ namespace Texter.Controllers
 {
     public class HomeController : Controller
     {
+
+        private TexterDbContext db = new TexterDbContext();
         public IActionResult Index()
         {
             return View();
@@ -21,12 +23,7 @@ namespace Texter.Controllers
             return View();
         }
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
 
-            return View();
-        }
 
         public IActionResult Error()
         {
@@ -49,6 +46,22 @@ namespace Texter.Controllers
         {
             newMessage.Send();
             return RedirectToAction("Index");
+        }
+
+        public IActionResult NewContact()
+        {
+            ViewBag.Contacts = db.Contacts.ToList();
+            return View(ViewBag.Contacts);
+        }
+
+       
+        [HttpPost]
+        public IActionResult NewContact(string newName, string newPhone)
+        {
+            Contact newContact = new Contact(newName, newPhone);
+            db.Contacts.Add(newContact);
+            db.SaveChanges();
+            return Json(newContact);
         }
     }
 }

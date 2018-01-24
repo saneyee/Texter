@@ -36,10 +36,10 @@ namespace Texter
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-
+            app.UseDeveloperExceptionPage();
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+
                 app.UseBrowserLink();
             }
             else

@@ -5,17 +5,17 @@ using RestSharp;
 using RestSharp.Authenticators;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Texter.Models
 {
+    [NotMapped]
     public class Message
     {
         public string To { get; set; }
         public string From { get; set; }
         public string Body { get; set; }
         public string Status { get; set; }
-
-
 
         public static List<Message> GetMessages()
         {
